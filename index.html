@@ -4,16 +4,37 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hexpedition | Home</title>
+    <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
+    <div id="chrome">
+      <div id="map"></div>
+      <div id="controls">
+        <!-- 
+      // chrome
+      // compass rose
+      // claim/release scout
+      // owner need lock/unlock to prevent map revealing at incorrect times
+      // perhaps it could issue a lock after each move so the owner can execute their own agame shit
+    -->
+        <button type="button">(un)Lock</button>
+        <button type="button" disabled>Scout</button>
+      </div>
+    </div>
+
+    <script src="queue.js"></script>
+    <script src="map.js"></script>
     <script>
       const HEX_MAP = {
         id: 1, // this is an instance id
         mapId: 1,
-        name: "",
-        mapHeight: 20, // hexes
+        name: "SO FUCKING WHAT",
+        mapHeight: 5, // hexes
         viewRadius: 1, // hexes
-        mapData: [
+        mapData: hex,
+        startHex: 21,
+        /*
+          [
           {
             id: 0,
             revealed: false,
@@ -27,7 +48,8 @@
             //   and moving -height would seem to mean index - height && index - height - 1 gives the left siblings
             siblings: [id, id, id, id, id, id],
           },
-        ],
+          ],
+          */
       };
 
       // The idea here is that entering a hex would change state and when state
@@ -36,7 +58,7 @@
       //   This assumes a view radius of 1. The diff would be different for a largeer view radius.
       const GAME_DATA = {
         MAP: HEX_MAP,
-        diff: [id, id, id, id, id, id, id],
+        // diff: [id, id, id, id, id, id, id],
       };
 
       // function painter(map) {
@@ -107,6 +129,7 @@
 
       // So the process becomes
       //  1. user selects hex
+      //    1. But it has to be a sibling hex
       //  2. icon is moved
       //  3. The entered hexes and viewed hexes are calculated and updated ()
       //  4. A diff of ids is produced
@@ -119,14 +142,40 @@
       // I could get this working in a browser and moving around then worry about pushing to a server
       //
 
-      // chrome
-      // compass rose
-      // claim/release scout
-      // owner need lock/unlock to prevent map revealing at incorrect times
-      // perhaps it could issue a lock after each move so the owner can execute their own agame shit
-
       // upgrade, procediral shit,
       // roll for randos when enter a hex or whatever
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const map = document.getElementById("map");
+
+        map.addEventListener("click", (e) => {
+          console.log(e.target.dataset);
+        });
+
+        let tpl = ``;
+        let open = false;
+        // mapHeight: 5, // hexes
+        // viewRadius: 1, // hexes
+        // mapData: hex,
+
+        for (let i = 0, ii = HEX_MAP.mapData.length; i < ii; i++) {
+          if (!open && (i + 1) % 5 !== 0) {
+            // where 5 is map height
+            open = true;
+            tpl = `${tpl}<div>`;
+          }
+
+          tpl = `${tpl}<div data-key=${i} class="${
+            i === HEX_MAP.startHex ? "start" : ""
+          }">${HEX_MAP.mapData[i].revealedTerrain}</div>`;
+
+          if (open && (i + 1) % 5 === 0) {
+            open = false;
+            tpl = `${tpl}</div>`;
+          }
+        }
+        map.innerHTML = tpl;
+      });
     </script>
     <script>
       // Tile Data
