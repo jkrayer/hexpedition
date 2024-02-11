@@ -11,12 +11,9 @@
       <div id="map"></div>
       <div id="controls">
         <!-- 
-      // chrome
-      // compass rose
-      // claim/release scout
-      // owner need lock/unlock to prevent map revealing at incorrect times
-      // perhaps it could issue a lock after each move so the owner can execute their own agame shit
-      -->
+          compass rose
+          perhaps it could issue a lock after each move so the owner can execute their process
+        -->
         <button type="button">(un)Lock</button>
         <button type="button" disabled>Scout</button>
       </div>
@@ -33,13 +30,6 @@
         viewRadius: 1, // hexes
         mapData: hex,
         startHex: 21,
-        /*
-        // or figure this out with math, top and bottom are easy index +/- 1, perhaps left and right are index - mapHeight...
-        // index 15 - 20 = -5 which means no left hand siblings
-        // index 15 + 20 = 35 and 36 seem to be correct,
-        // in fact moving +height would seem to mean index + height && index + height + 1 gives the right siblings
-        // and moving -height would seem to mean index - height && index - height - 1 gives the left siblings
-      */
       };
 
       // The idea here is that entering a hex would change state and when state
@@ -57,7 +47,15 @@
       //       else paint empty
       //   });
       // }
-      console.log("MAP LENGTH", hex.length);
+
+      /*
+        // or figure this out with math, top and bottom are easy index +/- 1, perhaps left and right are index - mapHeight...
+        // index 15 - 20 = -5 which means no left hand siblings
+        // index 15 + 20 = 35 and 36 seem to be correct,
+        // in fact moving +height would seem to mean index + height && index + height + 1 gives the right siblings
+        // and moving -height would seem to mean index - height && index - height - 1 gives the left siblings
+      */
+
       function getSiblings(radius = 1, mapHeight, hexIndex, mapLength) {
         const siblings = [];
 
@@ -162,9 +160,25 @@
         const map = document.getElementById("map");
 
         map.addEventListener("click", (e) => {
-          console.log(165, e.target.classList);
-          if (e.target.classList.contains("active")) {
-            console.log(e.target.dataset);
+          if (e.target.classList.contains("adjacent")) {
+            document
+              .querySelector(".start")
+              .classList.replace("start", "adjacent");
+            document
+              .querySelectorAll(".adjacent")
+              .forEach((el) => el.classList.remove("adjacent"));
+            e.target.classList.add("start");
+
+            getSiblings(
+              HEX_MAP.viewRadius,
+              HEX_MAP.mapHeight,
+              parseInt(e.target.dataset.key, 10),
+              HEX_MAP.mapData.length
+            ).forEach((key) => {
+              document
+                .querySelector(`[data-key='${key}']`)
+                .classList.add("adjacent");
+            });
           }
         });
 
@@ -207,17 +221,6 @@
         }
         map.innerHTML = tpl;
       });
-    </script>
-    <script>
-      // Tile Data
-      const TD = {
-        id: 0,
-        revealed: false,
-        terrain: "forest",
-        // The IDS of the 6 hexes that border this
-        // BUT might need to be larger when the vewRadius is larger
-        siblings: [null, null, null, null, null, null],
-      };
     </script>
   </body>
 </html>
