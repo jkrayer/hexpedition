@@ -58,6 +58,7 @@
       */
 
       function getSiblings(radius = 1, mapHeight, hexIndex, mapLength) {
+        const { inRange } = window.hexplorer.lib;
         const siblings = [];
 
         const colNumber = Math.floor(hexIndex / mapHeight) + 1;
@@ -169,29 +170,62 @@
           : "unexplored";
       }
 
+      //
+      renderHex = (hex, index) => {
+        const className = hex.occupied
+          ? "start"
+          : hex.adjacent
+          ? "adjacent"
+          : "unexplored"; // exists so classList.add doesn't error
+        const data = terrain(hex);
+
+        const d = document.createElement("div");
+        d.setAttribute("data-key", index);
+        d.classList.add(className);
+        d.append(`${data}-${index}`);
+
+        return d;
+      };
+
+      const renderAll = (map, mapData, mapHeight) => {
+        for (let i = 0, ii = mapData.length; i < ii; i) {
+          let d = document.createElement("div");
+
+          let j = i;
+          let jj = Math.min(i + mapHeight, mapData.length);
+
+          for (; j < jj; j++) {
+            d.appendChild(renderHex(mapData[j], j));
+          }
+
+          i = j;
+          map.appendChild(d);
+        }
+      };
+
       document.addEventListener("DOMContentLoaded", () => {
         const map = document.getElementById("map");
 
         map.addEventListener("click", (e) => {
           if (e.target.classList.contains("adjacent")) {
-            document
-              .querySelector(".start")
-              .classList.replace("start", "adjacent");
-            document
-              .querySelectorAll(".adjacent")
-              .forEach((el) => el.classList.remove("adjacent"));
-            e.target.classList.add("start");
-
-            getSiblings(
-              HEX_MAP.viewRadius,
-              HEX_MAP.mapHeight,
-              parseInt(e.target.dataset.key, 10),
-              HEX_MAP.mapData.length
-            ).forEach((key) => {
-              document
-                .querySelector(`[data-key='${key}']`)
-                .classList.add("adjacent");
-            });
+            window.hexplorer.queue.enqueue(e.target);
+            // document
+            //   .querySelector(".start")
+            //   .classList.replace("start", "adjacent");
+            // document
+            //   .querySelectorAll(".adjacent")
+            //   .forEach((el) => el.classList.remove("adjacent"));
+            // e.target.classList.add("start");
+            // getSiblings(
+            //   HEX_MAP.viewRadius,
+            //   HEX_MAP.mapHeight,
+            //   parseInt(e.target.dataset.key, 10),
+            //   HEX_MAP.mapData.length
+            // ).forEach((key) => {
+            //   document
+            //     .querySelector(`[data-key='${key}']`)
+            //     .classList.add("adjacent");
+            // });
           }
         });
 
@@ -208,31 +242,89 @@
         // viewRadius: 1, // hexes
         // mapData: hex,
 
-        for (let i = 0, ii = HEX_MAP.mapData.length; i < ii; i++) {
-          if (!open && (i + 1) % 5 !== 0) {
-            // where 5 is map height
-            open = true;
-            tpl = `${tpl}<div>`;
-          }
+        // for (let i = 0, ii = HEX_MAP.mapData.length; i < ii; i++) {
+        //   if (!open && (i + 1) % 5 !== 0) {
+        //     // where 5 is map height
+        //     open = true;
+        //     tpl = `${tpl}<div>`;
+        //   }
 
-          const className =
-            i === HEX_MAP.startHex
-              ? "start"
-              : adjacentHexes.includes(i)
-              ? "adjacent"
-              : "";
+        //   const className =
+        //     i === HEX_MAP.startHex
+        //       ? "start"
+        //       : adjacentHexes.includes(i)
+        //       ? "adjacent"
+        //       : "";
 
-          tpl = `${tpl}<div data-key=${i} class="${className}">${terrain(
-            HEX_MAP.mapData[i]
-          )}-${i}</div>`;
+        //   tpl = `${tpl}<div data-key=${i} class="${className}">${terrain(
+        //     HEX_MAP.mapData[i]
+        //   )}-${i}</div>`;
 
-          if (open && (i + 1) % 5 === 0) {
-            open = false;
-            tpl = `${tpl}</div>`;
-          }
-        }
-        map.innerHTML = tpl;
+        //   if (open && (i + 1) % 5 === 0) {
+        //     open = false;
+        //     tpl = `${tpl}</div>`;
+        //   }
+        // }
+        // map.innerHTML = tpl;
+
+        // for (let i = 0, ii = HEX_MAP.mapData.length; i < ii; i) {
+        //   let d = document.createElement("div");
+
+        //   let j = i;
+        //   let jj = Math.min(i + HEX_MAP.mapHeight, HEX_MAP.mapData.length);
+
+        //   for (; j < jj; j++) {
+        //     console.log(266, j);
+        //     d.appendChild(renderHex(HEX_MAP.mapData[j], j));
+        //   }
+
+        //   i = j;
+        //   map.appendChild(d);
+        // }
+        renderAll(map, HEX_MAP.mapData, HEX_MAP.mapHeight);
       });
+
+      /*
+      let sixty = 1000 / 60;
+      let later = 0;
+
+      const gameLoop = () => {
+        const now = Date.now();
+        console.log("candy", now, later);
+
+        if (now > later) {
+          later = now + sixty;
+          console.log("deQ", hexplorer.queue.dequeue());
+        }
+
+        requestAnimationFrame(gameLoop);
+      };
+
+      requestAnimationFrame(gameLoop);
+      */
+
+      /*
+      let prev;
+      let elapsed;
+      const sixtyFPS = 1000 / 60;
+      const thirtyFPS = 1000 / 30;
+      let i = 1;
+
+      const gameLoop = (timeStamp) => {
+        if (prev === undefined) prev = timeStamp;
+
+        elapsed = timeStamp - prev;
+
+        if (elapsed > thirtyFPS) {
+          // console.log(`doing stuff ${++i}, ${sixtyFPS}`);
+          console.log(hexplorer.queue.dequeue());
+        }
+
+        requestAnimationFrame(gameLoop);
+      };
+
+      requestAnimationFrame(gameLoop);
+      */
     </script>
   </body>
 </html>

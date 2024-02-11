@@ -116,12 +116,14 @@ const hex = [
     traversed: false,
     revealedTerrain: "swamp",
     traversedTerrain: "swamp",
+    adjacent: true,
   },
   {
     revealed: true,
     traversed: false,
     revealedTerrain: "swamp",
     traversedTerrain: "swamp",
+    adjacent: true,
   },
   {
     revealed: false,
@@ -140,18 +142,21 @@ const hex = [
     traversed: false,
     revealedTerrain: "swamp",
     traversedTerrain: "swamp",
+    adjacent: true,
   },
   {
     revealed: true,
     traversed: true,
     revealedTerrain: "swamp",
     traversedTerrain: "swamp",
+    occupied: true,
   },
   {
     revealed: true,
     traversed: false,
     revealedTerrain: "swamp",
     traversedTerrain: "swamp",
+    adjacent: true,
   },
   {
     revealed: false,
@@ -176,12 +181,14 @@ const hex = [
     traversed: false,
     revealedTerrain: "swamp",
     traversedTerrain: "swamp",
+    adjacent: true,
   },
   {
     revealed: true,
     traversed: false,
     revealedTerrain: "swamp",
     traversedTerrain: "swamp",
+    adjacent: true,
   },
   {
     revealed: false,
