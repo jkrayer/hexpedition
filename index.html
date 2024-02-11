@@ -19,8 +19,9 @@
       </div>
     </div>
 
-    <script src="queue.js"></script>
     <script src="map.js"></script>
+    <script src="lib.js"></script>
+    <script src="queue.js"></script>
     <script>
       const HEX_MAP = {
         id: 1, // this is an instance id
@@ -59,30 +60,42 @@
       function getSiblings(radius = 1, mapHeight, hexIndex, mapLength) {
         const siblings = [];
 
+        const colNumber = Math.floor(hexIndex / mapHeight) + 1;
+        const isEvenCol = colNumber % 2 === 0;
+
+        // Sibling Hexes
         const top = hexIndex - 1;
         const bottom = hexIndex + 1;
-        const topLeft = hexIndex - mapHeight;
-        const bottomLeft = hexIndex - (mapHeight - 1);
-        const topRight = hexIndex + mapHeight;
-        const bottomRight = hexIndex + mapHeight + 1;
-        const cols = Math.ceil(mapLength / mapHeight);
+        const left = hexIndex - mapHeight;
+        const leftOther = left + (isEvenCol ? -1 : 1);
+        const right = hexIndex + mapHeight;
+        const rightOther = right + (isEvenCol ? -1 : 1);
+
+        // Row Index
         const colFirstIndex = Math.floor(hexIndex / mapHeight) * mapHeight;
-        const colLastIndex = Math.ceil(hexIndex / mapHeight) * mapHeight - 1;
+        const colLastIndex = colFirstIndex + mapHeight - 1;
         const prevColFirstIndex = Math.max(colFirstIndex - mapHeight, 0);
         const prevColLastIndex = Math.max(colLastIndex - mapHeight, 0);
         const nextColFirstIndex = Math.min(
           colFirstIndex + mapHeight,
           mapLength
         );
-        const nextColLastIndex = Math.min(colLastIndex + mapHeight, mapLength);
+        const nextColLastIndex = Math.min(
+          colLastIndex + mapHeight,
+          mapLength - 1
+        );
 
         // all imaginary indexes I haven't calculated or sourced yet
         if (top >= colFirstIndex) siblings.push(top);
         if (bottom <= colLastIndex) siblings.push(bottom);
-        if (topLeft >= prevColFirstIndex) siblings.push(topLeft);
-        if (bottomLeft <= prevColLastIndex) siblings.push(bottomLeft);
-        if (topRight >= nextColFirstIndex) siblings.push(topRight);
-        if (bottomRight <= nextColLastIndex) siblings.push(bottomRight);
+        if (inRange(prevColFirstIndex, prevColLastIndex, left))
+          siblings.push(left);
+        if (inRange(prevColFirstIndex, prevColLastIndex, leftOther))
+          siblings.push(leftOther);
+        if (inRange(nextColFirstIndex, nextColLastIndex, right))
+          siblings.push(right);
+        if (inRange(nextColFirstIndex, nextColLastIndex, rightOther))
+          siblings.push(rightOther);
 
         return siblings;
       }
@@ -190,7 +203,6 @@
           HEX_MAP.startHex,
           HEX_MAP.mapData.length
         );
-        console.log(166, adjacentHexes);
 
         // mapHeight: 5, // hexes
         // viewRadius: 1, // hexes
@@ -212,7 +224,7 @@
 
           tpl = `${tpl}<div data-key=${i} class="${className}">${terrain(
             HEX_MAP.mapData[i]
-          )}</div>`;
+          )}-${i}</div>`;
 
           if (open && (i + 1) % 5 === 0) {
             open = false;
