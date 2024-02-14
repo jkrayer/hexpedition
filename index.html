@@ -10,10 +10,6 @@
     <div id="chrome">
       <div id="map"></div>
       <div id="controls">
-        <!-- 
-          compass rose
-          perhaps it could issue a lock after each move so the owner can execute their process
-        -->
         <button type="button">(un)Lock</button>
         <button type="button" disabled>Scout</button>
       </div>
@@ -22,13 +18,16 @@
     <script src="map.js"></script>
     <script src="lib.js"></script>
     <script src="queue.js"></script>
+    <script src="render.js"></script>
+    <script src="game-loop.js"></script>
     <script>
+      // INSTANCE
       const HEX_MAP = {
-        id: 1, // this is an instance id
+        id: 1,
         mapId: 1,
         name: "SO FUCKING WHAT",
-        mapHeight: 5, // hexes
-        viewRadius: 1, // hexes
+        mapHeight: 5,
+        viewRadius: 1,
         mapData: hex,
         startHex: 21,
       };
@@ -36,27 +35,20 @@
       // The idea here is that entering a hex would change state and when state
       // is changed we'd know the ids of the updated hexes.
       // So we record them here so the render engine can change only the 7 updated hexes.
-      //   This assumes a view radius of 1. The diff would be different for a largeer view radius.
+      // This assumes a view radius of 1. The diff would be different for a largeer view radius.
       const GAME_DATA = {
         MAP: HEX_MAP,
-        // diff: [id, id, id, id, id, id, id],
       };
 
-      // function painter(map) {
-      //   map.forEach(() => {
-      //       if revealed paint icon
-      //       else paint empty
-      //   });
-      // }
-
-      /*
-        // or figure this out with math, top and bottom are easy index +/- 1, perhaps left and right are index - mapHeight...
-        // index 15 - 20 = -5 which means no left hand siblings
-        // index 15 + 20 = 35 and 36 seem to be correct,
-        // in fact moving +height would seem to mean index + height && index + height + 1 gives the right siblings
-        // and moving -height would seem to mean index - height && index - height - 1 gives the left siblings
-      */
-
+      /**
+       *
+       * @param {number} radius
+       * @param {number} mapHeight
+       * @param {number} hexIndex
+       * @param {number} mapLenth
+       *
+       * @returns {Array<number>}
+       */
       function getSiblings(radius = 1, mapHeight, hexIndex, mapLength) {
         const { inRange } = window.hexplorer.lib;
         const siblings = [];
@@ -101,230 +93,17 @@
         return siblings;
       }
 
-      function onEnterHex(hex) {
-        const siblings = getSiblings(hex.index, viewradius);
-
-        onRevealrHex(hex);
-        siblings.forEach((hex) => onViewHex(hex));
-      }
-
-      function onRevealrHex(hex) {
-        return { ...hex, revealed: true, traversed: true };
-      }
-
-      function onViewHex(hex) {
-        return { ...hex, revealed: true };
-      }
-
-      // So the process becomes
-      //  1. user selects hex
-      //  2. icon is moved
-      //  3. The entered hexes and viewed hexes are calculated and updated ()
-      //  4. A diff of ids is produced
-      //
-      // meanwhile the game loop looks for the diff list and re-renders just those
-      // hexes when it's full
-      // the diff would therefore need to be a queue that the game loop could access
-      // and deplete.
-      // the reason I'm thinking queue right now is becuase game state and rendering
-      // could operate independently ... both update the queue but the loop
-      // doesn't care when the queue is updated it just takes a piece when available
-      //
-      // Now the diff ids is a good idea locally but if I had to send this over a
-      // server then just the ids would be meaningless on another computer. so
-      // the diff must naturally be changes hexes that can be merged into local state.
-
-      // but also if I'm sending to a server then I don't think I'd want to merge
-      // diff and data so maybe the updated mao passed so the server with the diff id list
-      // that way a consunder can replace the board for refreshed and use the diff
-      // to get those cells for updating the dome
-
-      // So the process becomes
-      //  1. user selects hex
-      //    1. But it has to be a sibling hex
-      //  2. icon is moved
-      //  3. The entered hexes and viewed hexes are calculated and updated ()
-      //  4. A diff of ids is produced
-      //  5. local ui updates
-      //  6. Diff and map update are sent to the server
-      //  7. The server saves data and also relays updated data to other users
-      //  8.
-
-      // local testing
-      // I could get this working in a browser and moving around then worry about pushing to a server
-      //
-
-      // upgrade, procediral shit,
-      // roll for randos when enter a hex or whatever
-
-      /**
-       *
-       * @param { HEX } hex
-       * @returns { string }
-       */
-      function terrain(hex) {
-        return hex.traversed
-          ? hex.traversedTerrain
-          : hex.revealed
-          ? hex.revealedTerrain
-          : "unexplored";
-      }
-
-      //
-      renderHex = (hex, index) => {
-        const className = hex.occupied
-          ? "start"
-          : hex.adjacent
-          ? "adjacent"
-          : "unexplored"; // exists so classList.add doesn't error
-        const data = terrain(hex);
-
-        const d = document.createElement("div");
-        d.setAttribute("data-key", index);
-        d.classList.add(className);
-        d.append(`${data}-${index}`);
-
-        return d;
-      };
-
-      const renderAll = (map, mapData, mapHeight) => {
-        for (let i = 0, ii = mapData.length; i < ii; i) {
-          let d = document.createElement("div");
-
-          let j = i;
-          let jj = Math.min(i + mapHeight, mapData.length);
-
-          for (; j < jj; j++) {
-            d.appendChild(renderHex(mapData[j], j));
-          }
-
-          i = j;
-          map.appendChild(d);
-        }
-      };
-
       document.addEventListener("DOMContentLoaded", () => {
         const map = document.getElementById("map");
 
         map.addEventListener("click", (e) => {
           if (e.target.classList.contains("adjacent")) {
             window.hexplorer.queue.enqueue(e.target);
-            // document
-            //   .querySelector(".start")
-            //   .classList.replace("start", "adjacent");
-            // document
-            //   .querySelectorAll(".adjacent")
-            //   .forEach((el) => el.classList.remove("adjacent"));
-            // e.target.classList.add("start");
-            // getSiblings(
-            //   HEX_MAP.viewRadius,
-            //   HEX_MAP.mapHeight,
-            //   parseInt(e.target.dataset.key, 10),
-            //   HEX_MAP.mapData.length
-            // ).forEach((key) => {
-            //   document
-            //     .querySelector(`[data-key='${key}']`)
-            //     .classList.add("adjacent");
-            // });
           }
         });
 
-        let tpl = ``;
-        let open = false;
-        const adjacentHexes = getSiblings(
-          HEX_MAP.viewRadius,
-          HEX_MAP.mapHeight,
-          HEX_MAP.startHex,
-          HEX_MAP.mapData.length
-        );
-
-        // mapHeight: 5, // hexes
-        // viewRadius: 1, // hexes
-        // mapData: hex,
-
-        // for (let i = 0, ii = HEX_MAP.mapData.length; i < ii; i++) {
-        //   if (!open && (i + 1) % 5 !== 0) {
-        //     // where 5 is map height
-        //     open = true;
-        //     tpl = `${tpl}<div>`;
-        //   }
-
-        //   const className =
-        //     i === HEX_MAP.startHex
-        //       ? "start"
-        //       : adjacentHexes.includes(i)
-        //       ? "adjacent"
-        //       : "";
-
-        //   tpl = `${tpl}<div data-key=${i} class="${className}">${terrain(
-        //     HEX_MAP.mapData[i]
-        //   )}-${i}</div>`;
-
-        //   if (open && (i + 1) % 5 === 0) {
-        //     open = false;
-        //     tpl = `${tpl}</div>`;
-        //   }
-        // }
-        // map.innerHTML = tpl;
-
-        // for (let i = 0, ii = HEX_MAP.mapData.length; i < ii; i) {
-        //   let d = document.createElement("div");
-
-        //   let j = i;
-        //   let jj = Math.min(i + HEX_MAP.mapHeight, HEX_MAP.mapData.length);
-
-        //   for (; j < jj; j++) {
-        //     console.log(266, j);
-        //     d.appendChild(renderHex(HEX_MAP.mapData[j], j));
-        //   }
-
-        //   i = j;
-        //   map.appendChild(d);
-        // }
-        renderAll(map, HEX_MAP.mapData, HEX_MAP.mapHeight);
+        hexplorer.render.renderAll(map, HEX_MAP.mapData, HEX_MAP.mapHeight);
       });
-
-      /*
-      let sixty = 1000 / 60;
-      let later = 0;
-
-      const gameLoop = () => {
-        const now = Date.now();
-        console.log("candy", now, later);
-
-        if (now > later) {
-          later = now + sixty;
-          console.log("deQ", hexplorer.queue.dequeue());
-        }
-
-        requestAnimationFrame(gameLoop);
-      };
-
-      requestAnimationFrame(gameLoop);
-      */
-
-      /*
-      let prev;
-      let elapsed;
-      const sixtyFPS = 1000 / 60;
-      const thirtyFPS = 1000 / 30;
-      let i = 1;
-
-      const gameLoop = (timeStamp) => {
-        if (prev === undefined) prev = timeStamp;
-
-        elapsed = timeStamp - prev;
-
-        if (elapsed > thirtyFPS) {
-          // console.log(`doing stuff ${++i}, ${sixtyFPS}`);
-          console.log(hexplorer.queue.dequeue());
-        }
-
-        requestAnimationFrame(gameLoop);
-      };
-
-      requestAnimationFrame(gameLoop);
-      */
     </script>
   </body>
 </html>
