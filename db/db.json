@@ -1,0 +1,422 @@
+{
+  "maps": [
+    {
+      "id": 1,
+      "type": "map",
+      "name": "Barony of Therund",
+      "map_height": 5,
+      "view_radius": 1,
+      "start_hex": 21,
+      "map_data": [
+        {
+          "revealed": false,
+          "traversed": false,
+          "revealedTerrain": "swamp",
+          "traversedTerrain": "swamp"
+        },
+        {
+          "revealed": false,
+          "traversed": false,
+          "revealedTerrain": "swamp",
+          "traversedTerrain": "swamp"
+        },
+        {
+          "revealed": false,
+          "traversed": false,
+          "revealedTerrain": "swamp",
+          "traversedTerrain": "swamp"
+        },
+        {
+          "revealed": false,
+          "traversed": false,
+          "revealedTerrain": "swamp",
+          "traversedTerrain": "swamp"
+        },
+        {
+          "revealed": false,
+          "traversed": false,
+          "revealedTerrain": "forest",
+          "traversedTerrain": "forest"
+        },
+        {
+          "revealed": false,
+          "traversed": false,
+          "revealedTerrain": "forest",
+          "traversedTerrain": "forest"
+        },
+        {
+          "revealed": false,
+          "traversed": false,
+          "revealedTerrain": "forest",
+          "traversedTerrain": "forest"
+        },
+        {
+          "revealed": false,
+          "traversed": false,
+          "revealedTerrain": "forest",
+          "traversedTerrain": "forest"
+        },
+        {
+          "revealed": false,
+          "traversed": false,
+          "revealedTerrain": "forest",
+          "traversedTerrain": "forest"
+        },
+        {
+          "revealed": false,
+          "traversed": false,
+          "revealedTerrain": "forest",
+          "traversedTerrain": "forest"
+        },
+        {
+          "revealed": false,
+          "traversed": false,
+          "revealedTerrain": "forest",
+          "traversedTerrain": "forest"
+        },
+        {
+          "revealed": false,
+          "traversed": false,
+          "revealedTerrain": "forest",
+          "traversedTerrain": "forest"
+        },
+        {
+          "revealed": false,
+          "traversed": false,
+          "revealedTerrain": "forest",
+          "traversedTerrain": "forest"
+        },
+        {
+          "revealed": false,
+          "traversed": false,
+          "revealedTerrain": "forest",
+          "traversedTerrain": "forest"
+        },
+        {
+          "revealed": false,
+          "traversed": false,
+          "revealedTerrain": "swamp",
+          "traversedTerrain": "swamp"
+        },
+        {
+          "revealed": false,
+          "traversed": false,
+          "revealedTerrain": "swamp",
+          "traversedTerrain": "swamp"
+        },
+        {
+          "revealed": true,
+          "traversed": false,
+          "revealedTerrain": "swamp",
+          "traversedTerrain": "swamp",
+          "adjacent": true
+        },
+        {
+          "revealed": true,
+          "traversed": false,
+          "revealedTerrain": "swamp",
+          "traversedTerrain": "swamp",
+          "adjacent": true
+        },
+        {
+          "revealed": false,
+          "traversed": false,
+          "revealedTerrain": "swamp",
+          "traversedTerrain": "swamp"
+        },
+        {
+          "revealed": false,
+          "traversed": false,
+          "revealedTerrain": "swamp",
+          "traversedTerrain": "swamp"
+        },
+        {
+          "revealed": true,
+          "traversed": false,
+          "revealedTerrain": "swamp",
+          "traversedTerrain": "swamp",
+          "adjacent": true
+        },
+        {
+          "revealed": true,
+          "traversed": true,
+          "revealedTerrain": "swamp",
+          "traversedTerrain": "swamp",
+          "occupied": true
+        },
+        {
+          "revealed": true,
+          "traversed": false,
+          "revealedTerrain": "swamp",
+          "traversedTerrain": "swamp",
+          "adjacent": true
+        },
+        {
+          "revealed": false,
+          "traversed": false,
+          "revealedTerrain": "swamp",
+          "traversedTerrain": "swamp"
+        },
+        {
+          "revealed": false,
+          "traversed": false,
+          "revealedTerrain": "swamp",
+          "traversedTerrain": "swamp"
+        },
+        {
+          "revealed": false,
+          "traversed": false,
+          "revealedTerrain": "swamp",
+          "traversedTerrain": "swamp"
+        },
+        {
+          "revealed": true,
+          "traversed": false,
+          "revealedTerrain": "swamp",
+          "traversedTerrain": "swamp",
+          "adjacent": true
+        },
+        {
+          "revealed": true,
+          "traversed": false,
+          "revealedTerrain": "swamp",
+          "traversedTerrain": "swamp",
+          "adjacent": true
+        },
+        {
+          "revealed": false,
+          "traversed": false,
+          "revealedTerrain": "swamp",
+          "traversedTerrain": "swamp"
+        },
+        {
+          "revealed": false,
+          "traversed": false,
+          "revealedTerrain": "swamp",
+          "traversedTerrain": "swamp"
+        },
+        {
+          "revealed": false,
+          "traversed": false,
+          "revealedTerrain": "swamp",
+          "traversedTerrain": "swamp"
+        },
+        {
+          "revealed": false,
+          "traversed": false,
+          "revealedTerrain": "swamp",
+          "traversedTerrain": "swamp"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "instance",
+      "name": "Barony of Therund",
+      "map_height": 5,
+      "view_radius": 1,
+      "start_hex": 21,
+      "map_data": [
+        {
+          "revealed": false,
+          "traversed": false,
+          "revealedTerrain": "swamp",
+          "traversedTerrain": "swamp"
+        },
+        {
+          "revealed": false,
+          "traversed": false,
+          "revealedTerrain": "swamp",
+          "traversedTerrain": "swamp"
+        },
+        {
+          "revealed": false,
+          "traversed": false,
+          "revealedTerrain": "swamp",
+          "traversedTerrain": "swamp"
+        },
+        {
+          "revealed": false,
+          "traversed": false,
+          "revealedTerrain": "swamp",
+          "traversedTerrain": "swamp"
+        },
+        {
+          "revealed": false,
+          "traversed": false,
+          "revealedTerrain": "forest",
+          "traversedTerrain": "forest"
+        },
+        {
+          "revealed": false,
+          "traversed": false,
+          "revealedTerrain": "forest",
+          "traversedTerrain": "forest"
+        },
+        {
+          "revealed": false,
+          "traversed": false,
+          "revealedTerrain": "forest",
+          "traversedTerrain": "forest"
+        },
+        {
+          "revealed": false,
+          "traversed": false,
+          "revealedTerrain": "forest",
+          "traversedTerrain": "forest"
+        },
+        {
+          "revealed": false,
+          "traversed": false,
+          "revealedTerrain": "forest",
+          "traversedTerrain": "forest"
+        },
+        {
+          "revealed": false,
+          "traversed": false,
+          "revealedTerrain": "forest",
+          "traversedTerrain": "forest"
+        },
+        {
+          "revealed": false,
+          "traversed": false,
+          "revealedTerrain": "forest",
+          "traversedTerrain": "forest"
+        },
+        {
+          "revealed": false,
+          "traversed": false,
+          "revealedTerrain": "forest",
+          "traversedTerrain": "forest"
+        },
+        {
+          "revealed": false,
+          "traversed": false,
+          "revealedTerrain": "forest",
+          "traversedTerrain": "forest"
+        },
+        {
+          "revealed": false,
+          "traversed": false,
+          "revealedTerrain": "forest",
+          "traversedTerrain": "forest"
+        },
+        {
+          "revealed": false,
+          "traversed": false,
+          "revealedTerrain": "swamp",
+          "traversedTerrain": "swamp"
+        },
+        {
+          "revealed": false,
+          "traversed": false,
+          "revealedTerrain": "swamp",
+          "traversedTerrain": "swamp"
+        },
+        {
+          "revealed": true,
+          "traversed": false,
+          "revealedTerrain": "swamp",
+          "traversedTerrain": "swamp",
+          "adjacent": true
+        },
+        {
+          "revealed": true,
+          "traversed": false,
+          "revealedTerrain": "swamp",
+          "traversedTerrain": "swamp",
+          "adjacent": true
+        },
+        {
+          "revealed": false,
+          "traversed": false,
+          "revealedTerrain": "swamp",
+          "traversedTerrain": "swamp"
+        },
+        {
+          "revealed": false,
+          "traversed": false,
+          "revealedTerrain": "swamp",
+          "traversedTerrain": "swamp"
+        },
+        {
+          "revealed": true,
+          "traversed": false,
+          "revealedTerrain": "swamp",
+          "traversedTerrain": "swamp",
+          "adjacent": true
+        },
+        {
+          "revealed": true,
+          "traversed": true,
+          "revealedTerrain": "swamp",
+          "traversedTerrain": "swamp",
+          "occupied": true
+        },
+        {
+          "revealed": true,
+          "traversed": false,
+          "revealedTerrain": "swamp",
+          "traversedTerrain": "swamp",
+          "adjacent": true
+        },
+        {
+          "revealed": false,
+          "traversed": false,
+          "revealedTerrain": "swamp",
+          "traversedTerrain": "swamp"
+        },
+        {
+          "revealed": false,
+          "traversed": false,
+          "revealedTerrain": "swamp",
+          "traversedTerrain": "swamp"
+        },
+        {
+          "revealed": false,
+          "traversed": false,
+          "revealedTerrain": "swamp",
+          "traversedTerrain": "swamp"
+        },
+        {
+          "revealed": true,
+          "traversed": false,
+          "revealedTerrain": "swamp",
+          "traversedTerrain": "swamp",
+          "adjacent": true
+        },
+        {
+          "revealed": true,
+          "traversed": false,
+          "revealedTerrain": "swamp",
+          "traversedTerrain": "swamp",
+          "adjacent": true
+        },
+        {
+          "revealed": false,
+          "traversed": false,
+          "revealedTerrain": "swamp",
+          "traversedTerrain": "swamp"
+        },
+        {
+          "revealed": false,
+          "traversed": false,
+          "revealedTerrain": "swamp",
+          "traversedTerrain": "swamp"
+        },
+        {
+          "revealed": false,
+          "traversed": false,
+          "revealedTerrain": "swamp",
+          "traversedTerrain": "swamp"
+        },
+        {
+          "revealed": false,
+          "traversed": false,
+          "revealedTerrain": "swamp",
+          "traversedTerrain": "swamp"
+        }
+      ]
+    }
+  ]
+}

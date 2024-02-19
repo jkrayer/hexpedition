@@ -5,10 +5,12 @@
 /**
  * @typedef { Object } HEX
  * @property { number } id - The default number of players.
- * @property { boolean } revealed - Hex has been viewed
- * @property { boolean } traversed - Hex has been travelled
- * @property { Terrain } revealedTerrain - Hex to show when revealed is true
- * @property { Terrain } traversedTerrain - Hex to show when traversed is true
+ * @property { boolean } hex.revealed - Hex has been viewed
+ * @property { boolean } hex.traversed - Hex has been travelled
+ * @property { Terrain } hex.revealedTerrain - Hex to show when revealed is true
+ * @property { Terrain } hex.traversedTerrain - Hex to show when traversed is true
+ * @property { boolean } [hex.adjacent] - Hex is adjacent to the current player position
+ * @property { boolean } [hex.occupied] - Current player occupied space
  */
 
 /**

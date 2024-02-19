@@ -2,6 +2,19 @@
 
 Owlbear Rodeo for hex crawls.
 
+## TO DO
+
+1. Start dealing with API
+   1. using json-server for local dev
+   2. could be posgre later
+   3. now need a loading phase as data returns from the server
+2. Add procedural features
+   1. Roll for randos when a hex is entered
+
+## Future
+
+1. Replace observable with proxy
+
 ## Notes from Index
 
 ### UI
@@ -15,14 +28,15 @@ Owlbear Rodeo for hex crawls.
 
 For map data.
 
-| name        | type     |
-| ----------- | -------- |
-| ID          | Int      |
-| NAME        | String   |
-| MAP_HEIGHT  | SmallInt |
-| VIEW_RADIUS | SmallInt |
-| START_HEX   | SmallInt |
-| MAP_DATA    | JSON     |
+| name        | type     | key                        |
+| ----------- | -------- | -------------------------- |
+| ID          | Int      | primary, unique            |
+| TYPE        | String   | secondary: map \| instance |
+| NAME        | String   |                            |
+| MAP_HEIGHT  | SmallInt |                            |
+| VIEW_RADIUS | SmallInt |                            |
+| START_HEX   | SmallInt |                            |
+| MAP_DATA    | JSON     |                            |
 
 #### "instance" table
 
@@ -35,10 +49,9 @@ For re-using maps.
 | MAP_ID   | Int    |
 | MAP_DATA | JSON   |
 
-## TO DO
-
-1. Add procedural features
-   1. Roll for randos when a hex is entered
+Are there any real differences between maps and instances in terms of data? I
+don't think so. Map is a template for instance and should therefore not be
+updated where an instance is updated.
 
 ## PROCESS NOTES
 
