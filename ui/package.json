@@ -1,0 +1,24 @@
+{
+  "name": "hexpedition-ui",
+  "version": "1.0.0",
+  "description": "React UI for Hexpedition",
+  "main": "index.js",
+  "scripts": {
+    "build": "parcel build",
+    "start": "parcel src/index.html -p 8080",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "browserslist": "> 0.5%, last 2 versions, not dead",
+  "author": "James Krayer",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/react": "18.2.58",
+    "@types/react-dom": "18.2.19",
+    "parcel": "^2.11.0",
+    "process": "^0.11.10"
+  },
+  "dependencies": {
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  }
+}
