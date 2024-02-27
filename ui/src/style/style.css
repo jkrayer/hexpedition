@@ -6,7 +6,7 @@ body {
   overscroll-behavior: none;
 }
 
-#chrome {
+#app {
   box-sizing: border-box;
   width: 100vw;
   height: 100vh;
@@ -45,6 +45,7 @@ button:disabled {
   flex: 1 1;
   cursor: default;
 }
+
 #map > div:nth-child(odd) {
   padding-top: 0.5rem;
 }

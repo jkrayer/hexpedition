@@ -23,6 +23,8 @@ declare global {
     traversed: boolean;
     revealedTerrain: TERRAIN;
     traversedTerrain: TERRAIN;
+    occupied?: true;
+    adjacent?: true;
   };
 
   type MAP = {
