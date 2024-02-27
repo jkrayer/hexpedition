@@ -25,10 +25,17 @@ function RenderMap({ data: { map_data, map_height } }: { data: MAP }) {
     [map_data, map_height]
   );
 
+  const handleClick = (e) => console.log(e);
+
   const hexes = cols.map((col, colIndex) => (
     <div key={`col-${colIndex}`}>
       {col.map((hex, hexIndex) => (
-        <Hex key={`index=${colIndex + hexIndex}`} hex={hex} index={hexIndex} />
+        <Hex
+          key={`index=${colIndex + hexIndex}`}
+          hex={hex}
+          index={hexIndex}
+          onClick={handleClick}
+        />
       ))}
     </div>
   ));
