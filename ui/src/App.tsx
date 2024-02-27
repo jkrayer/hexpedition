@@ -1,5 +1,10 @@
-import React from "react";
+import React, { StrictMode } from "react";
+import HexMap from "./components/Map";
 
 export default function App() {
-  return <h1>Hello World!</h1>;
+  return (
+    <StrictMode>
+      <HexMap />
+    </StrictMode>
+  );
 }
